@@ -1,0 +1,229 @@
+{
+"initialEpoch": 1047358440,
+"finalEpoch": 1048596840,
+    "globalFrameOrigin": "Ganymede",
+    "globalFrameOrientation": "ECLIPJ2000",
+    "spice": {
+        "useStandardKernels": true,
+        "preloadEphemeris": false
+    },
+    "bodies": {
+        "Ganymede": {
+            "useDefaultSettings": true,
+            "atmosphere": {
+                "densityScaleHeight": 40E3,
+                "constantTemperature": 290,
+                "densityAtZeroAltitude": 2E-9,
+                "type": "exponential"
+            }
+
+            },
+        "Sun": {
+            "useDefaultSettings": true
+            },
+        "Jupiter": {
+            "useDefaultSettings": true
+            },
+
+         "Saturn": {
+            "useDefaultSettings": true
+             },
+         "Europa": {
+            "useDefaultSettings": true
+             },
+         "Io": {
+            "useDefaultSettings": true
+             },
+         "Callisto": {
+            "useDefaultSettings": true
+             },
+
+        "JUICE": {
+
+            "ephemeris":
+            {
+                "type": "directSpice",
+                "frameOrigin": "Ganymede",
+                "frameOrientation": "ECLIPJ2000"
+            },
+            "aerodynamics": {
+                   "forceCoefficients": [
+                       1.5,
+                       0,
+                       0
+                   ]
+               },
+             "mass":2000,
+             "referenceArea":100,
+             "radiationPressure": {
+               "Sun": {
+                 "radiationPressureCoefficient": 1.2,
+                 "occultingBodies": [
+                   "Ganymede"
+                 ]
+               }
+             }
+        }
+    },
+    "propagators": [
+        {
+            "integratedStateType": "translational",
+            "bodiesToPropagate": [
+                "JUICE"
+            ],
+            "centralBodies": [
+                "Ganymede"
+            ],
+            "accelerations": {
+                "JUICE": {
+                    "Ganymede": [
+                        {
+                            "maximumDegree":2,
+                            "maximumOrder":2,
+                            "type": "sphericalHarmonicGravity"
+                        },
+                        {
+                            "type": "aerodynamic"
+                        }
+                    ],
+
+                    "Sun": [
+                        {
+                            "type": "pointMassGravity"
+                        },
+                        {
+                            "type": "cannonBallRadiationPressure"
+                        }
+                    ],
+                    "Jupiter": [
+                        {
+                            "maximumDegree":4,
+                            "maximumOrder":0,
+                            "type": "sphericalHarmonicGravity"
+                        }
+
+                    ],
+
+
+                    "Saturn": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ],
+
+
+                    "Europa": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ],
+
+
+                    "Io": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ],
+
+
+                    "Callisto": [
+                        {
+                            "type": "pointMassGravity"
+                        }
+                    ]
+                }
+
+            }
+
+
+        }
+    ],
+    "integrator": {
+        "type": "rungeKutta4",
+        "stepSize": 10
+    },
+    "export": [
+        {
+            "file": "dependent_variables_Q3.dat",
+            "variables": [
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "keplerElements",
+                    "relativeToBody": "Ganymede"
+                },
+
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType": "pointMassGravity",
+                    "bodyExertingAcceleration": "Sun"
+                },
+
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType": "pointMassGravity",
+                    "bodyExertingAcceleration": "Saturn"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType": "pointMassGravity",
+                    "bodyExertingAcceleration": "Europa"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType": "pointMassGravity",
+                    "bodyExertingAcceleration": "Io"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType": "pointMassGravity",
+                    "bodyExertingAcceleration": "Callisto"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType": "aerodynamic",
+                    "bodyExertingAcceleration": "Ganymede"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType": "cannonBallRadiationPressure",
+                    "bodyExertingAcceleration": "Sun"
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "sphericalHarmonicsAccelerationTermNorms",
+                    "bodyExertingAcceleration": "Ganymede",
+                    "componentIndices": [ [ 0, 0 ], [ 2, 0 ], [ 2, 2 ] ]
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "sphericalHarmonicsAccelerationTermNorms",
+                    "bodyExertingAcceleration": "Jupiter",
+                    "componentIndices": [ [ 0, 0 ], [ 2, 0 ], [ 4, 0 ] ]
+                },
+                {
+                    "body": "JUICE",
+                    "dependentVariableType": "accelerationNorm",
+                    "accelerationType": "sphericalHarmonicGravity",
+                    "bodyExertingAcceleration": "Jupiter"
+                }
+
+            ]
+        },
+        {
+            "file": "propagated_state_Q3.dat",
+            "variables": [
+                {
+                    "type": "state"
+                }
+            ]
+        }
+    ],
+    "printVariableTypes": true
+}
